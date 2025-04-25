@@ -19,10 +19,13 @@ const Home = () => {
 
   const incHandle = (id) => {
     setItems((prev) => prev.map((i) => i.id === id ? { ...i, quan: i.quan + 1 } : i));
+    toast.success('Item Quantity Increased')
+    
   };
 
   const decHandle = (id) => {
     setItems((prev) => prev.map((i) => i.id === id && i.quan > 1 ? { ...i, quan: i.quan - 1 } : i));
+    toast.success('Item Quantity Decreased')
   };
 
   return (
@@ -69,14 +72,15 @@ const Home = () => {
                 <div className="flex items-center space-x-3">
                   <button
                     onClick={() => decHandle(e.id)}
-                    className="bg-red-200 text-white rounded-full px-4 py-2 text-lg hover:bg-red-600 transition"
+                    disabled={e.quan<=1}
+                    className={` bg-red-200 text-white rounded-full px-4 py-2 text-lg hover:bg-red-600 transition ${e.quan<=1?'bg-gray-400 cursor-not-allowed':'cursor-pointer'}`}
                   >
                     −
                   </button>
                   <span className="text-lg font-medium">{e.quan}</span>
                   <button
                     onClick={() => incHandle(e.id)}
-                    className="bg-green-300 text-white rounded-full px-4 py-2 text-lg hover:bg-green-600 transition"
+                    className="cursor-pointer bg-green-300 text-white rounded-full px-4 py-2 text-lg hover:bg-green-600 transition"
                   >
                     +
                   </button>
@@ -84,6 +88,7 @@ const Home = () => {
 
                 <button
                   onClick={() => addHandle(e)}
+                  disabled={isadded.includes(e.id)}
                   className={`px-6 py-2 rounded-full text-white font-semibold transition ${
                     isadded.includes(e.id)
                       ? 'bg-gray-400 cursor-not-allowed'
