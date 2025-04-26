@@ -8,21 +8,6 @@ import toast, { Toaster } from 'react-hot-toast';
 const Cart = () => {
     const { cart, setcart } = useContext(context);
 
-    useEffect(() => {
-        if (cart.length > 0) {
-            localStorage.setItem("cart", JSON.stringify(cart))
-        }
-    }, [cart])
-
-    useEffect(() => {
-        const content = localStorage.getItem("cart")
-        if (content) {
-            setcart(JSON.parse(content))
-        }
-    }, [setcart])
-
-
-
     const incHandle = (id) => {
         setcart((prev) => prev.map((i) => i.id === id ? { ...i, quan: i.quan + 1 } : i));
         toast.success('Item Quantity Increased')
